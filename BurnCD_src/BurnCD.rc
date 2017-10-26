@@ -1,0 +1,192 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\BurnCD.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""     // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\BurnCD.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "TODO: <Company name>"
+            VALUE "FileDescription", "TODO: <File description>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "BurnCD.exe"
+            VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
+            VALUE "OriginalFilename", "BurnCD.exe"
+            VALUE "ProductName", "TODO: <Product name>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_BURNCD_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 426
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 266
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_BURNCD_DIALOG DIALOGEX 0, 0, 433, 273
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "BurnCD"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "Files to Burn",IDC_STATIC,7,7,216,163
+    LISTBOX         IDC_BURN_FILE_LIST,14,19,199,85,LBS_SORT | LBS_OWNERDRAWVARIABLE | LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP,WS_EX_ACCEPTFILES
+    PUSHBUTTON      "Add Files...",IDC_ADD_FILES_BUTTON,13,108,60,19
+    PUSHBUTTON      "Add Folder...",IDC_ADD_FOLDER_BUTTON,83,108,60,19
+    PUSHBUTTON      "Remove File(s)",IDC_REMOVE_FILES_BUTTON,153,108,60,19
+    LTEXT           "Volume Label:",IDC_STATIC,33,135,45,8
+    EDITTEXT        IDC_VOLUME,83,132,95,14,ES_AUTOHSCROLL
+    CONTROL         "Close Media",IDC_CLOSE_MEDIA_CHK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,34,151,54,10
+    GROUPBOX        "Device",IDC_STATIC,230,7,196,161
+    COMBOBOX        IDC_DEVICE_COMBO,243,22,172,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Supported Media Types:",IDC_STATIC,237,50,79,8
+    LTEXT           "IDC_SUPPORTED_MEDIA_TYPES",IDC_SUPPORTED_MEDIA_TYPES,246,61,171,38
+    LTEXT           "Selected Media Type:",IDC_STATIC,237,105,70,8
+    COMBOBOX        IDC_MEDIA_TYPE_COMBO,247,118,130,30,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "0",IDC_STATIC,241,142,8,8
+    RTEXT           "IDC_MAX_TEXT",IDC_MAX_TEXT,365,143,51,8
+    CONTROL         "",IDC_CAPACITY,"msctls_progress32",WS_BORDER,239,152,178,8
+    PUSHBUTTON      "Burn",IDC_BURN_BUTTON,34,176,60,19
+    LTEXT           "Estimated Time:",IDC_STATIC,17,203,52,8
+    RTEXT           "00:00",IDC_ESTIMATED_TIME,73,203,20,8
+    LTEXT           "Time Left:",IDC_STATIC,36,221,33,8
+    RTEXT           "00:00",IDC_TIME_LEFT,73,221,20,8
+    CTEXT           "IDC_PROGRESS_TEXT",IDC_PROGRESS_TEXT,151,183,233,8
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,115,194,301,13
+    CTEXT           "IDC_BUFFER_TEXT",IDC_BUFFER_TEXT,151,215,233,8
+    CONTROL         "",IDC_BUFFER_PROG,"msctls_progress32",WS_BORDER,115,226,301,13
+    PUSHBUTTON      "Close",IDCANCEL,376,247,50,19
+    CONTROL         "Eject when finished",IDC_EJECT_WHEN_FINISHED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,108,151,78,10
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\BurnCD.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"     // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
