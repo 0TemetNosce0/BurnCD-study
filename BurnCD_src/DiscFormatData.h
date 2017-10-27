@@ -34,9 +34,9 @@ class CDiscRecorder;
 class CDiscFormatData
 {
 private:
-	IDiscFormat2Data*	m_discFormatData;
+	IDiscFormat2Data*	m_discFormatData;//IDiscFormat2Data
 	SAFEARRAY*			m_mediaTypesArray;//所支持的媒体类型
-	HRESULT				m_hResult;
+	HRESULT				m_hResult;//
 	CString				m_errorMessage;
 	HWND				m_hNotificationWnd;
 	bool				m_closeMedia;

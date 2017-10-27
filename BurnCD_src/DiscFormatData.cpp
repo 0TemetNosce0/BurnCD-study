@@ -147,10 +147,10 @@ bool CDiscFormatData::Burn(HWND hNotificationWnd, IStream* streamData)
 	m_discFormatData->put_ForceMediaToBeClosed(m_closeMedia ? VARIANT_TRUE : VARIANT_FALSE);//设置用于写操作的记录设备。
 
 
-	m_hResult = m_discFormatData->Write(m_streamData);//写
+	m_hResult = m_discFormatData->Write(m_streamData);//写，一直在写，直到完成。
 
 	delete eventSink;
-
+	//m_errorMessage.Format(_T("IDiscFormat2Data11111111111111111111111111"));
 	if (SUCCEEDED(m_hResult))
 	{
 		return true;

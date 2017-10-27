@@ -37,7 +37,7 @@ bool CDiscMaster::Initialize()
 	if (m_discMaster == NULL)
 	{
 		m_hResult = CoCreateInstance(__uuidof(MsftDiscMaster2), NULL, CLSCTX_INPROC_SERVER,
-			__uuidof(IDiscMaster2), (void**)&m_discMaster);
+			__uuidof(IDiscMaster2), (void**)&m_discMaster);//IDiscMaster2点进去可以看到"27354130-7F64-5B0F-8F00-5D77AFBE261E"
 		if (!SUCCEEDED(m_hResult))
 		{
 			m_errorMessage.Format(_T("Unable to Initialize IDiscMaster2 - Error:0x%08x"), m_hResult);

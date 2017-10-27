@@ -27,8 +27,8 @@ protected:
 	bool	m_isDvdSupported;
 	bool	m_isDualLayerDvdSupported;
 	int		m_selectedMediaType;//选择的媒体类型：比如cd dvd dvd双层
-	bool	m_isBurning;
-	bool	m_cancelBurn;
+	bool	m_isBurning;//是否正在烧录
+	bool	m_cancelBurn;//是否是取消烧录按钮
 	CCriticalSection m_critSection;
 
 

@@ -63,9 +63,9 @@ void CBurnCDDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CBurnCDDlg, CDialog)
-    ON_CBN_SELCHANGE(IDC_DEVICE_COMBO, &CBurnCDDlg::OnCbnSelchangeDeviceCombo)
+    ON_CBN_SELCHANGE(IDC_DEVICE_COMBO, &CBurnCDDlg::OnCbnSelchangeDeviceCombo)// device combo
     ON_LBN_SELCHANGE(IDC_BURN_FILE_LIST, &CBurnCDDlg::OnLbnSelchangeBurnFileList)
-    ON_BN_CLICKED(IDC_ADD_FILES_BUTTON, &CBurnCDDlg::OnBnClickedAddFilesButton)
+    ON_BN_CLICKED(IDC_ADD_FILES_BUTTON, &CBurnCDDlg::OnBnClickedAddFilesButton)//添加文件按钮
     ON_BN_CLICKED(IDC_ADD_FOLDER_BUTTON, &CBurnCDDlg::OnBnClickedAddFolderButton)
     ON_WM_DESTROY()
     ON_BN_CLICKED(IDC_BURN_BUTTON, &CBurnCDDlg::OnBnClickedBurnButton)
@@ -90,7 +90,7 @@ BOOL CBurnCDDlg::OnInitDialog()
     m_maxText.SetWindowText(_T(""));
     m_capacityProgress.SetRange(0,100);
 
-    AddRecordersToComboBox();
+    AddRecordersToComboBox();//添加设备到组合框
     OnLbnSelchangeBurnFileList();
     EnableBurnButton();
 
@@ -102,6 +102,7 @@ BOOL CBurnCDDlg::OnInitDialog()
     return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
+//添加设备到组合框
 void CBurnCDDlg::AddRecordersToComboBox()
 {
     CDiscMaster			discMaster;
@@ -109,6 +110,7 @@ void CBurnCDDlg::AddRecordersToComboBox()
     //
     // Cleanup old data on combobox
     //
+	//清除以前的数据
     int itemCount = m_deviceComboBox.GetCount();
     for (int itemIndex = 0; itemIndex < itemCount; itemIndex++)
     {
@@ -350,8 +352,9 @@ void CBurnCDDlg::OnLbnSelchangeBurnFileList()
     GetDlgItem(IDC_REMOVE_FILES_BUTTON)->EnableWindow(m_fileListbox.GetCurSel()!=-1);
 }
 
+//添加文件按钮 click
 void CBurnCDDlg::OnBnClickedAddFilesButton()
-{
+{   
     CFileDialog fileDialog(TRUE, NULL, NULL, OFN_FILEMUSTEXIST, _T("All Files (*.*)|*.*||"), NULL, 0);
     if (fileDialog.DoModal() == IDOK)
     {
@@ -362,7 +365,7 @@ void CBurnCDDlg::OnBnClickedAddFilesButton()
         EnableBurnButton();
     }
 }
-
+//添加文件夹
 void CBurnCDDlg::OnBnClickedAddFolderButton()
 {
     BROWSEINFO bi = {0};
@@ -402,23 +405,25 @@ void CBurnCDDlg::OnDestroy()
     CDialog::OnDestroy();
 }
 
+//烧录按钮
 void CBurnCDDlg::OnBnClickedBurnButton()
 {
-    if (m_isBurning)
+    if (m_isBurning)//录制
     {
-        SetCancelBurning(true);
+        SetCancelBurning(true);//设置取消烧录按钮
     }
     else
     {
-        SetCancelBurning(false);
+        SetCancelBurning(false);//去除取消烧录按钮
         m_isBurning = true;
         UpdateData();
-        EnableUI(false);
+        EnableUI(false);//ui 使能。
 
-        AfxBeginThread(BurnThread, this, THREAD_PRIORITY_NORMAL);
+        AfxBeginThread(BurnThread, this, THREAD_PRIORITY_NORMAL);//线程创建
     }
 }
 
+//烧录线程
 UINT CBurnCDDlg::BurnThread(LPVOID pParam)
 {
     CBurnCDDlg* pThis = (CBurnCDDlg*)pParam;
@@ -448,7 +453,7 @@ UINT CBurnCDDlg::BurnThread(LPVOID pParam)
     //
     // Did user cancel?
     //
-    if (pThis->GetCancelBurning())
+    if (pThis->GetCancelBurning())//是否取消
     {
         pThis->SendMessage(WM_BURN_FINISHED, 0, (LPARAM)_T("User Canceled!"));
         return 0;
@@ -459,7 +464,7 @@ UINT CBurnCDDlg::BurnThread(LPVOID pParam)
     //
     // Create another disc recorder because we're in a different thread
     //
-    CDiscRecorder discRecorder;
+    CDiscRecorder discRecorder;//
 
     CString errorMessage;
     if (discRecorder.Initialize(pOrigDiscRecorder->GetUniqueId()))
@@ -492,7 +497,7 @@ UINT CBurnCDDlg::BurnThread(LPVOID pParam)
                 //
                 // Burn the data, this does all the work
                 //
-                discFormatData.Burn(pThis->m_hWnd, dataStream);
+                discFormatData.Burn(pThis->m_hWnd, dataStream);//烧录
 
                 //
                 // Eject Media if they chose
@@ -966,7 +971,7 @@ void CBurnCDDlg::EnableUI(BOOL bEnable)
 //取消burn
 void CBurnCDDlg::SetCancelBurning(bool bCancel)
 {
-    CSingleLock singleLock(&m_critSection);
+    CSingleLock singleLock(&m_critSection);//互斥
     m_cancelBurn = bCancel;
 }
 //取消burn

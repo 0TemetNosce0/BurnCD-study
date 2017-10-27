@@ -2,7 +2,7 @@
 // DiscRecorder.cpp
 //
 // Wrapper for IDiscRecorder2 Interface
-//
+//IDiscRecorder2 表示一个物理设备,一个刻录机
 // Written by Eric Haddan
 //
 #include "StdAfx.h"
@@ -11,7 +11,7 @@
 #ifndef CDROM_EXCLUSIVE_CALLER_LENGTH
 #define CDROM_EXCLUSIVE_CALLER_LENGTH 64
 #endif
-
+//刻录机
 CDiscRecorder::CDiscRecorder(void)
 : m_discRecorder(NULL)
 , m_volumePathNames(NULL)
