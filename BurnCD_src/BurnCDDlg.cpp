@@ -69,7 +69,7 @@ BEGIN_MESSAGE_MAP(CBurnCDDlg, CDialog)
     ON_BN_CLICKED(IDC_ADD_FOLDER_BUTTON, &CBurnCDDlg::OnBnClickedAddFolderButton)
     ON_WM_DESTROY()
     ON_BN_CLICKED(IDC_BURN_BUTTON, &CBurnCDDlg::OnBnClickedBurnButton)
-    ON_MESSAGE(WM_IMAPI_UPDATE, OnImapiUpdate)
+    ON_MESSAGE(WM_IMAPI_UPDATE, OnImapiUpdate)//小相当于connect
     ON_MESSAGE(WM_BURN_STATUS_MESSAGE, OnBurnStatusMessage)
     ON_MESSAGE(WM_BURN_FINISHED, OnBurnFinished)
     ON_CBN_SELCHANGE(IDC_MEDIA_TYPE_COMBO, &CBurnCDDlg::OnCbnSelchangeMediaTypeCombo)
@@ -467,12 +467,12 @@ UINT CBurnCDDlg::BurnThread(LPVOID pParam)
     CDiscRecorder discRecorder;//
 
     CString errorMessage;
-    if (discRecorder.Initialize(pOrigDiscRecorder->GetUniqueId()))
+    if (discRecorder.Initialize(pOrigDiscRecorder->GetUniqueId()))//初始化
     {
         //
         // 
         //
-        if (discRecorder.AcquireExclusiveAccess(true, CLIENT_NAME))
+        if (discRecorder.AcquireExclusiveAccess(true, CLIENT_NAME))//独占访问
         {
             CDiscFormatData discFormatData;
             if (discFormatData.Initialize(&discRecorder, CLIENT_NAME))
@@ -481,13 +481,13 @@ UINT CBurnCDDlg::BurnThread(LPVOID pParam)
                 // Get the media type currently in the recording device
                 //
                 IMAPI_MEDIA_PHYSICAL_TYPE mediaType = IMAPI_MEDIA_TYPE_UNKNOWN;
-                discFormatData.GetInterface()->get_CurrentPhysicalMediaType(&mediaType);
+                discFormatData.GetInterface()->get_CurrentPhysicalMediaType(&mediaType);//当前媒体类型
 
                 //
                 // Create the file system
                 //
                 IStream* dataStream = NULL;
-                if (!CreateMediaFileSystem(pThis, mediaType, &dataStream))
+                if (!CreateMediaFileSystem(pThis, mediaType, &dataStream))//创建文件系统
                 {	// CreateMediaFileSystem reported error to UI
                     return false;
                 }
@@ -546,7 +546,7 @@ UINT CBurnCDDlg::BurnThread(LPVOID pParam)
 bool CBurnCDDlg::CreateMediaFileSystem(CBurnCDDlg* pThis, IMAPI_MEDIA_PHYSICAL_TYPE mediaType, IStream** ppDataStream)
 {
     IFileSystemImage*		image = NULL;
-    IFileSystemImageResult*	imageResult = NULL;
+    IFileSystemImageResult*	imageResult = NULL;//使用此接口获取有关烧伤图像、图像数据流和进度信息的信息。
     IFsiDirectoryItem*		rootItem = NULL;
     CString					message;
     bool					returnVal = false;
@@ -747,7 +747,7 @@ LRESULT CBurnCDDlg::OnImapiUpdate(WPARAM wParam, LPARAM lParam)
         m_progressText.SetWindowText(_T("Optimizing laser intensity..."));
         break;
 
-    case IMAPI_FORMAT2_DATA_WRITE_ACTION_WRITING_DATA:
+    case IMAPI_FORMAT2_DATA_WRITE_ACTION_WRITING_DATA://更新进度条，时间等
         UpdateTimes(pImapiStatus->totalTime, pImapiStatus->remainingTime);
         UpdateBuffer(pImapiStatus->usedSystemBuffer, pImapiStatus->totalSystemBuffer);
         UpdateProgress(pImapiStatus->lastWrittenLba-pImapiStatus->startLba, pImapiStatus->sectorCount);

@@ -60,7 +60,7 @@ bool CDiscFormatData::Initialize(CDiscRecorder* pDiscRecorder, const CString& cl
 	// Setup the Disc Format Information
 	//
 	VARIANT_BOOL isSupported = VARIANT_FALSE;
-	m_hResult = m_discFormatData->IsRecorderSupported(pDiscRecorder->GetInterface(), &isSupported);//确定记录器是否支持给定格式。
+	m_hResult = m_discFormatData->IsRecorderSupported(pDiscRecorder->GetInterface(), &isSupported);//确定记录器是否支持记录
 	if (isSupported == VARIANT_FALSE)
 	{
 		m_errorMessage = _T("Recorder not supported");
@@ -129,7 +129,7 @@ bool CDiscFormatData::Burn(HWND hNotificationWnd, IStream* streamData)
 	m_hNotificationWnd = hNotificationWnd;
 
 	// Create the event sink
-	CDiscFormatDataEvent* eventSink = CDiscFormatDataEvent::CreateEventSink();
+	CDiscFormatDataEvent* eventSink = CDiscFormatDataEvent::CreateEventSink();//事件连接相关的。
 	if (eventSink == NULL)
 	{
 		m_errorMessage = _T("Unable to create event sink");
@@ -144,7 +144,7 @@ bool CDiscFormatData::Burn(HWND hNotificationWnd, IStream* streamData)
 
 	eventSink->SetHwnd(m_hNotificationWnd);
 
-	m_discFormatData->put_ForceMediaToBeClosed(m_closeMedia ? VARIANT_TRUE : VARIANT_FALSE);//设置用于写操作的记录设备。
+	m_discFormatData->put_ForceMediaToBeClosed(m_closeMedia ? VARIANT_TRUE : VARIANT_FALSE);//确定是否可以防止进一步添加到文件系统。
 
 
 	m_hResult = m_discFormatData->Write(m_streamData);//写，一直在写，直到完成。

@@ -185,7 +185,7 @@ bool CDiscFormatDataEvent::ConnectDiscFormatData(CDiscFormatData* pDiscFormatDat
 //			Receives update notifications from IDiscFormat2Data
 //
 STDMETHODIMP_(HRESULT) CDiscFormatDataEvent::XFormatDataEvents::Update(IDispatch* objectDispatch, IDispatch* progressDispatch)
-{
+{//收录的时候会不断的调用
 	METHOD_PROLOGUE(CDiscFormatDataEvent, FormatDataEvents)
 
     IDiscFormat2DataEventArgs* progress = NULL;
@@ -223,10 +223,11 @@ STDMETHODIMP_(HRESULT) CDiscFormatDataEvent::XFormatDataEvents::Update(IDispatch
 		}
 	}
 
-	LRESULT ret = ::SendMessage(pThis->m_hNotifyWnd, WM_IMAPI_UPDATE, currentAction, (LPARAM)(LPVOID)&imapiStatus);
+	//发送消息更新
+	LRESULT ret = ::SendMessage(pThis->m_hNotifyWnd, WM_IMAPI_UPDATE, currentAction, (LPARAM)(LPVOID)&imapiStatus);//WM_IMAPI_UPDATE消息，后面的是参数
 	if (ret == RETURN_CANCEL_WRITE)
 	{
-		discFormatData->CancelWrite();
+		discFormatData->CancelWrite();//取消写
 	}
 
 	return S_OK;

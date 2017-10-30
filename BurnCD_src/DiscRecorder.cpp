@@ -111,9 +111,9 @@ bool CDiscRecorder::AcquireExclusiveAccess(bool force, const CString& clientName
 
 	if (m_discRecorder != NULL)
 	{
-		m_hResult = m_discRecorder->AcquireExclusiveAccess(
+		m_hResult = m_discRecorder->AcquireExclusiveAccess(//获得对设备的独占访问。
 			force ? VARIANT_TRUE : VARIANT_FALSE,
-			clientName.AllocSysString());
+			clientName.AllocSysString());//第二个参数自己取
 		if (SUCCEEDED(m_hResult))
 		{
 			return true;
@@ -259,7 +259,7 @@ bool CDiscRecorder::DisableMcn()
 //
 // Description:
 //		Returns the legacy device number
-//
+//检索CD或DVD设备的遗留设备编号。
 LONG CDiscRecorder::GetLegacyDeviceNumber()
 {
 	LONG deviceNumber = 0;
