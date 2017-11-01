@@ -46,6 +46,7 @@ END_MESSAGE_MAP()
 
 // CDiscFormatDataEvent message handlers
 
+//内部类
 ULONG FAR EXPORT CDiscFormatDataEvent::XFormatDataEvents::AddRef()
 {
 	METHOD_PROLOGUE(CDiscFormatDataEvent, FormatDataEvents)
@@ -104,7 +105,7 @@ STDMETHODIMP CDiscFormatDataEvent::XFormatDataEvents::Invoke(
 	UINT FAR* puArgErr)
 {
 	METHOD_PROLOGUE(CDiscFormatDataEvent, FormatDataEvents)
-
+		//return S_OK;
 	return DispInvoke(&pThis->m_xFormatDataEvents, pThis->m_ptinfo,
 		dispidMember, wFlags, pdispparams, pvarResult, pexcepinfo, puArgErr);
 }
@@ -147,7 +148,8 @@ CDiscFormatDataEvent* CDiscFormatDataEvent::CreateEventSink()
 //connect CDiscFormatData, so CDiscFormatDataEvent可以处理消息
 bool CDiscFormatDataEvent::ConnectDiscFormatData(CDiscFormatData* pDiscFormatData)
 {
-	m_pUnkSink = GetIDispatch(FALSE);
+	////使用IConnectionPointContainer连接
+	//m_pUnkSink = GetIDispatch(FALSE);
 	m_pUnkSrc = pDiscFormatData->GetInterface();//获取IDiscFormat2Data
 
 	LPTYPELIB ptlib = NULL;
@@ -159,21 +161,59 @@ bool CDiscFormatDataEvent::ConnectDiscFormatData(CDiscFormatData* pDiscFormatDat
 		return false;
 	}
 	hr = ptlib->GetTypeInfoOfGuid(IID_DDiscFormat2DataEvents, &m_ptinfo);//获取对应于指定的GUID的类描述
-    ptlib->Release();
+		ptlib->Release();
 	if (FAILED(hr))
 	{
-	    return false;
+		return false;
 	}
 
-	BOOL bRet = AfxConnectionAdvise(m_pUnkSrc, IID_DDiscFormat2DataEvents, m_pUnkSink,
-		TRUE, &m_dwCookie);//调用此函数在pUnkSrc指定的源和pUnkSink指定的接收器之间建立连接。
-
-	if (bRet)
+	IConnectionPointContainer  *lpConnectionPointContainer = NULL;
+	m_pUnkSrc->QueryInterface(IID_IConnectionPointContainer, (void **)&lpConnectionPointContainer);
+	if (lpConnectionPointContainer)
 	{
-		return true;
-	}
+		IConnectionPoint    *lpConnectionPoint = NULL;
+		lpConnectionPointContainer->FindConnectionPoint(IID_DDiscFormat2DataEvents, &lpConnectionPoint);
 
-	return false;
+		lpConnectionPointContainer->Release();
+		lpConnectionPointContainer = NULL;
+
+		if (lpConnectionPoint)
+		{
+			DWORD  ldwCookie = 0;
+			// 添加到COM中的类容器中  
+			lpConnectionPoint->Advise(&m_xFormatDataEvents, &ldwCookie);
+			return true;
+		}
+		return false;
+	}
+	
+	//使用MFC的AfxConnectionAdvise进行连接
+	//m_pUnkSink = GetIDispatch(FALSE);
+	//m_pUnkSrc = pDiscFormatData->GetInterface();//获取IDiscFormat2Data
+	//LPTYPELIB ptlib = NULL;
+	//HRESULT hr = LoadRegTypeLib(LIBID_IMAPILib2, 
+	//	IMAPILib2_MajorVersion, IMAPILib2_MinorVersion, 
+	//	LOCALE_SYSTEM_DEFAULT, &ptlib);//com组件，使用类型库的第一步是装载它，LoadRegTypeLib他将试图从Windows的注册表中装载指定的类型库
+	//if (FAILED(hr))
+	//{
+	//	return false;
+	//}
+	//hr = ptlib->GetTypeInfoOfGuid(IID_DDiscFormat2DataEvents, &m_ptinfo);//获取对应于指定的GUID的类描述
+ //   ptlib->Release();
+	//if (FAILED(hr))
+	//{
+	//    return false;
+	//}
+
+	//BOOL bRet = AfxConnectionAdvise(m_pUnkSrc, IID_DDiscFormat2DataEvents, m_pUnkSink,
+	//	TRUE, &m_dwCookie);//调用此函数在pUnkSrc指定的源和pUnkSink指定的接收器之间建立连接。
+
+	//if (bRet)
+	//{
+	//	return true;
+	//}
+
+	//return false;
 }
 
 

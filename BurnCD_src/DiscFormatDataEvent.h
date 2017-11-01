@@ -34,6 +34,7 @@ public:
 
     DECLARE_INTERFACE_MAP()
 
+	//一个类XFormatDataEvents继承DDiscFormat2DataEvents，BEGIN_INTERFACE_PART是个宏
     BEGIN_INTERFACE_PART(FormatDataEvents, DDiscFormat2DataEvents)
 		//
 		// IDispatch Methods
